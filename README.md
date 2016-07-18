@@ -1,2 +1,13 @@
-# underscore-analyse
-underscore源码注解与分析
+# underscore-1.8.3.js 源码注解
+
+#背景
+
+	1. 尝试源码阅读
+	2. 了解函数式编程
+
+#产物
+
+
+#里程碑
+
+
