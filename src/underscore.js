@@ -176,6 +176,7 @@
         return result;
     };
 
+    // 闭包
     var property = function(key) {
         return function(obj) {
             return obj == null ? void 0 : obj[key];
@@ -188,10 +189,28 @@
     // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
     var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
     var getLength = property('length');
+    // 类数组的判断方法
     var isArrayLike = function(collection) {
-        var length = getLength(collection);
+        var length = getLength(collection); // 类似 obj.length
         return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
     };
+    // jQuery的判断
+    // function isArraylike( obj ) {
+    //     var length = obj.length,
+    //         type = jQuery.type( obj );
+
+    //     if ( jQuery.isWindow( obj ) ) {
+    //         return false;
+    //     }
+
+    //     if ( obj.nodeType === 1 && length ) {
+    //         return true;
+    //     }
+
+    //     return type === "array" || type !== "function" &&
+    //         ( length === 0 ||
+    //         typeof length === "number" && length > 0 && ( length - 1 ) in obj );
+    // }
 
     // Collection Functions
     // --------------------
