@@ -567,6 +567,7 @@
     };
 
     // Trim out all falsy values from an array.
+    // 过滤掉所有可以转换为 false 的值，[0,null,false,'',undefined,NaN,11] => [11] 
     _.compact = function(array) {
         return _.filter(array, _.identity);
     };
@@ -1371,7 +1372,7 @@
     // Is a given variable an object?
     _.isObject = function(obj) {
         var type = typeof obj;
-        return type === 'function' || type === 'object' && !!obj;
+        return type === 'function' || type === 'object' && !!obj; //排除 nul,因为typeof null 返回的也是 'object'
     };
 
     // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
@@ -1440,6 +1441,9 @@
     };
 
     // Keep the identity function around for default iteratees.
+    //这个函数返回与参数相同的值, 一般用于将一个数据的获取方式转换为函数获取方式(内部用于构建方法时作为默认处理器函数)
+    //这个方法看起来无任何作用，但是通篇用作默认迭代器 (_.compact)
+    //http://stackoverflow.com/questions/14216479/please-explain-usage-of-identityvalue-of-underscore-js
     _.identity = function(value) {
         return value;
     };
