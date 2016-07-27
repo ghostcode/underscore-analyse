@@ -176,7 +176,10 @@
         return result;
     };
 
-    // 闭包
+    //获得指定对象的属性（key）
+    // var getName = property('name');
+    // var name = getName({name:'zhuxy'});
+
     var property = function(key) {
         return function(obj) {
             return obj == null ? void 0 : obj[key];
@@ -191,7 +194,10 @@
     var getLength = property('length');
     // 类数组的判断方法
     var isArrayLike = function(collection) {
-        var length = getLength(collection); // 类似 obj.length
+        // 类似 obj.length
+        // 正常写法：
+        // var length = collection == null ? void 0: collection.length;
+        var length = getLength(collection);
         return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
     };
     // jQuery的判断
