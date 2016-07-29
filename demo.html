@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="./src/underscore.js"></script>
+	<script type="text/javascript">
+	var property = function(key) {
+	    return function(obj) {
+	        return obj == null ? void 0 : obj[key];
+	    };
+	};
+
+	// Helper for collection methods to determine whether a collection
+	// should be iterated as an array or as an object.
+	// Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
+	// Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
+	var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+	var getLength = property('length');
+	// 判断是否为数组或者类数组（具有length属性且值为Number类型同时值大于等于0）
+	// [1,2] => true
+	// {name:'zhuxy',length:10} => true
+
+	// {name:'zhuxy'} => false
+	// {name:'zhuxy',length:'10'} => false
+	// {name:'zhuxy',length:-10} => false
+	var isArrayLike = function(collection) {
+	    // 类似 obj.length
+	    // 正常写法：
+	    // var length = collection == null ? void 0: collection.length;
+	    var length = getLength(collection);
+	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	};
+
+	console.log(isArrayLike({name:'zhuxy',length:-10}))
+	console.log(_.last([1,2,3],2));
+
+	
+	</script>
+</head>
+<body>
+
+</body>
+</html>

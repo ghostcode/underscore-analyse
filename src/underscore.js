@@ -192,7 +192,13 @@
     // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
     var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
     var getLength = property('length');
-    // 类数组的判断方法
+    // 判断是否为数组或者类数组（具有length属性且值为Number类型同时值大于等于0）
+    // [1,2] => true
+    // {name:'zhuxy',length:10} => true
+    
+    // {name:'zhuxy'} => false
+    // {name:'zhuxy',length:'10'} => false
+    // {name:'zhuxy',length:-10} => false
     var isArrayLike = function(collection) {
         // 类似 obj.length
         // 正常写法：
@@ -224,10 +230,12 @@
     // The cornerstone, an `each` implementation, aka `forEach`.
     // Handles raw objects in addition to array-likes. Treats all
     // sparse array-likes as if they were dense.
+    // 处理 对象，类数组，数组
     _.each = _.forEach = function(obj, iteratee, context) {
         iteratee = optimizeCb(iteratee, context);
         var i, length;
-        if (isArrayLike(obj)) {
+
+        if (isArrayLike(obj)) {//是否为数组或类数组
             for (i = 0, length = obj.length; i < length; i++) {
                 iteratee(obj[i], i, obj);
             }
@@ -247,6 +255,7 @@
     // Return the results of applying the iteratee to each element.
     _.map = _.collect = function(obj, iteratee, context) {
         iteratee = cb(iteratee, context);
+            // 是否为类数组，数组：是则返回false，否返回对象的key组成的数组
         var keys = !isArrayLike(obj) && _.keys(obj),
             length = (keys || obj).length,
             results = Array(length);
