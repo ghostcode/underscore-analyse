@@ -128,9 +128,16 @@
     // element in a collection, returning the desired result — either `identity`,
     // an arbitrary callback, a property matcher, or a property accessor.
     var cb = function(value, context, argCount) {
-        if (value == null) return _.identity;
-        if (_.isFunction(value)) return optimizeCb(value, context, argCount);
-        if (_.isObject(value)) return _.matcher(value);
+        // 值为空，返回默认的迭代器
+        if (value == null){
+            return _.identity;
+        }
+        if (_.isFunction(value)){
+            return optimizeCb(value, context, argCount);
+        }
+        if (_.isObject(value)){
+            return _.matcher(value);
+        }
         return _.property(value);
     };
 
@@ -257,7 +264,9 @@
         iteratee = cb(iteratee, context);
             // 是否为类数组，数组：是则返回false，否返回对象的key组成的数组
         var keys = !isArrayLike(obj) && _.keys(obj),
+            // 若有keys则返回其长度，否则返回 obj（类数组／数组）的length值
             length = (keys || obj).length,
+            // 创建一个指定长度的空数组
             results = Array(length);
         for (var index = 0; index < length; index++) {
             var currentKey = keys ? keys[index] : index;
@@ -273,12 +282,26 @@
         var reducer = function(obj, iteratee, memo, initial) {
             var keys = !isArrayLike(obj) && _.keys(obj),
                 length = (keys || obj).length,
+                // dir大于0:左到右，dir小于0:右到左
                 index = dir > 0 ? 0 : length - 1;
             if (!initial) {
                 memo = obj[keys ? keys[index] : index];
                 index += dir;
             }
+            // index += dir，巧妙的不要判断dir类型（左到右或右到左）
+            // if(dir > 0){
+            //     for(;index < length; index++){
+            //         var currentKey = keys ? keys[index] : index;
+            //         memo = iteratee(memo, obj[currentKey], currentKey, obj);
+            //     }
+            // }else{
+            //     for(;index >= 0; index--){
+            //         var currentKey = keys ? keys[index] : index;
+            //         memo = iteratee(memo, obj[currentKey], currentKey, obj);
+            //     }
+            // }
             for (; index >= 0 && index < length; index += dir) {
+                // ??? 为何要每次都判断？
                 var currentKey = keys ? keys[index] : index;
                 memo = iteratee(memo, obj[currentKey], currentKey, obj);
             }
@@ -299,6 +322,7 @@
     _.reduceRight = _.foldr = createReduce(-1);
 
     // Return the first value which passes a truth test. Aliased as `detect`.
+    // 区分类数组／数组和对象
     _.find = _.detect = function(obj, predicate, context) {
         var key;
         if (isArrayLike(obj)) {
@@ -321,8 +345,23 @@
     };
 
     // Return all the elements for which a truth test fails.
+    // _.filter取反
     _.reject = function(obj, predicate, context) {
         return _.filter(obj, _.negate(cb(predicate)), context);
+
+        // _.negate = function(predicate) {
+        //     return function() {
+        //         return !predicate.apply(this, arguments);
+        //     };
+        // };
+
+        // return _.filter(
+        //             obj,
+        //             function() {
+        //                 return !cb(predicate).apply(this, arguments);
+        //             },
+        //             context
+        //         )
     };
 
     // Determine whether all of the elements match a truth test.
@@ -1163,6 +1202,7 @@
     _.extendOwn = _.assign = createAssigner(_.keys);
 
     // Returns the first key on an object that passes a predicate test.
+    // 返回第一个通过断言对象的key。
     _.findKey = function(obj, predicate, context) {
         predicate = cb(predicate, context);
         var keys = _.keys(obj),
