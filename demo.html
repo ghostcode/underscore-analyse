@@ -44,6 +44,70 @@
 	console.log(odds)
 
 
+	var createReduce = function(dir){
+
+		var reducer = function(obj,iteratee,memo,initial){
+			var keys = !isArrayLike(obj) && _.keys(obj);
+				length = (keys || obj).length,
+				index = dir > 0 ? 0 : length - 1;
+
+			if(!initial){
+				memo = obj[keys ? keys[index] : index];
+				index += dir;
+			}
+
+			for(; index >= 0 && index < length ; index += dir){
+				var currentKey = keys ? keys[index] : index;
+				memo = iteratee(memo,obj[currentKey],currentKey,obj);
+			}
+			return memo;
+		};
+
+		return function(obj,iteratee,memo,context){
+			var initial = arguments.length >= 3;
+			return reducer(obj,optimizeCb(iteratee,context,4),memo,initial);
+		};
+	}
+
+	_.has = function(obj,key){
+		return obj != null && hasOwnProperty.call(obj,key);
+	}
+	_.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
+	console.log(_.values({name:'zhuxy',age:20}))
+
+
+	var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+	console.log(_.pluck(stooges, 'name'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</script>
 </head>
 <body>

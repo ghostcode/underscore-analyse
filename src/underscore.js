@@ -393,8 +393,12 @@
     // Determine if the array or object contains a given item (using `===`).
     // Aliased as `includes` and `include`.
     _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
-        if (!isArrayLike(obj)) obj = _.values(obj);
-        if (typeof fromIndex != 'number' || guard) fromIndex = 0;
+        if (!isArrayLike(obj)){
+            obj = _.values(obj);
+        }
+        if (typeof fromIndex != 'number' || guard){
+            fromIndex = 0;
+        }
         return _.indexOf(obj, item, fromIndex) >= 0;
     };
 
@@ -403,7 +407,7 @@
         var isFunc = _.isFunction(method);
         return _.map(obj, function(value) {
             var func = isFunc ? method : value[method];
-            return func == null ? func : func.apply(value, args);
+            return func == null ? func : func.apply(value , args);
         });
     });
 
@@ -1099,13 +1103,25 @@
     // Retrieve the names of an object's own properties.
     // Delegates to **ECMAScript 5**'s native `Object.keys`.
     _.keys = function(obj) {
-        if (!_.isObject(obj)) return [];
-        if (nativeKeys) return nativeKeys(obj);
+        // 不是对象返回空数组
+        if (!_.isObject(obj)){
+            return [];
+        }
+        // 检测是否有本地Object.keys
+        if (nativeKeys){
+            return nativeKeys(obj);  
+        } 
+        // 无本地方法，则for...in循环，同时排出继承的属性
         var keys = [];
-        for (var key in obj)
-            if (_.has(obj, key)) keys.push(key);
+        for (var key in obj){
+            if (_.has(obj, key)){
+                keys.push(key);
+            }
+        }
             // Ahem, IE < 9.
-        if (hasEnumBug) collectNonEnumProps(obj, keys);
+        if (hasEnumBug){
+            collectNonEnumProps(obj, keys);
+        }
         return keys;
     };
 
@@ -1123,6 +1139,8 @@
     _.values = function(obj) {
         var keys = _.keys(obj);
         var length = keys.length;
+        // var values = [];
+        // ??? 为何要声明一个定长度的数组？
         var values = Array(length);
         for (var i = 0; i < length; i++) {
             values[i] = obj[keys[i]];
