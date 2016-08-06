@@ -260,13 +260,14 @@
     };
 
     // Return the results of applying the iteratee to each element.
+    // 不管传入的是Array或Objec，返回的是一个数组
     _.map = _.collect = function(obj, iteratee, context) {
         iteratee = cb(iteratee, context);
             // 是否为类数组，数组：是则返回false，否返回对象的key组成的数组
         var keys = !isArrayLike(obj) && _.keys(obj),
             // 若有keys则返回其长度，否则返回 obj（类数组／数组）的length值
             length = (keys || obj).length,
-            // 创建一个指定长度的空数组
+            // 创建一个指定长度的空数组 ???
             results = Array(length);
         for (var index = 0; index < length; index++) {
             var currentKey = keys ? keys[index] : index;
@@ -412,12 +413,19 @@
     });
 
     // Convenience version of a common use case of `map`: fetching a property.
+    // _.map的便利方法，只取出特定key的值。
+    // pluck:拉／拽／扯
     _.pluck = function(obj, key) {
         return _.map(obj, _.property(key));
+        // return _.map(obj,function(item){
+        //     return item[key];
+        // })
     };
 
     // Convenience version of a common use case of `filter`: selecting only objects
     // containing specific `key:value` pairs.
+    // filter的便捷方法，取出包含特定key:value的值
+    // 返回数组
     _.where = function(obj, attrs) {
         return _.filter(obj, _.matcher(attrs));
     };
@@ -1126,12 +1134,21 @@
     };
 
     // Retrieve all the property names of an object.
-    _.allKeys = function(obj) {
-        if (!_.isObject(obj)) return [];
+    _.allKeys = function(obj){
+
+        if (!_.isObject(obj)){
+            return [];
+        }
+
         var keys = [];
-        for (var key in obj) keys.push(key);
+
+        for (var key in obj){
+            keys.push(key);
+        }
         // Ahem, IE < 9.
-        if (hasEnumBug) collectNonEnumProps(obj, keys);
+        if (hasEnumBug){
+            collectNonEnumProps(obj, keys);
+        }
         return keys;
     };
 
@@ -1194,18 +1211,40 @@
     };
 
     // An internal function for creating assigner functions.
+    // 创建一个指定的方法。
+    // 三个方法用到此内部方法
+    // _.extend 自身属性和原型链属性都继承
+    // _.extendOwn 自身属性继承
+    // _.defaults 只覆盖原对象为undefined的属性
+
+    // http://www.w3cfuns.com/notes/17398/ca4a6f6117fab81048c3bc873f4b3c36:storey-2.html
+    // https://github.com/hanzichi/underscore-analysis/issues/4
     var createAssigner = function(keysFunc, defaults) {
+
         return function(obj) {
             var length = arguments.length;
-            if (defaults) obj = Object(obj);
-            if (length < 2 || obj == null) return obj;
+            // 对传入null／undefined的情况，将其转为 {}
+            if (defaults){
+                obj = Object(obj);
+            }
+            // 如果只传入一个参数或第一个参数为null／''/undefined，则直接返回
+            if (length < 2 || obj == null){
+                return obj;   
+            }
+            // 从第二个参数开始枚举
             for (var index = 1; index < length; index++) {
                 var source = arguments[index],
+                    // 取出对象的keys
+                    // 取值的参数：_.keys / _.allKeys
                     keys = keysFunc(source),
                     l = keys.length;
                 for (var i = 0; i < l; i++) {
                     var key = keys[i];
-                    if (!defaults || obj[key] === void 0) obj[key] = source[key];
+                    // _.extend/_.extendOwn的defaults参数都为undefined，所以此判断始终通过
+                    // _.defaults 参数为true，所以只能obj[key]的值为undefined时，才通过
+                    if (!defaults || obj[key] === void 0){
+                        obj[key] = source[key];
+                    }
                 }
             }
             return obj;
@@ -1217,6 +1256,29 @@
 
     // Assigns a given object with all the own properties in the passed-in object(s).
     // (https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+    // Object.assign只复制可枚举并且是自身的属性
+    // assign的实现
+    // if (typeof Object.assign != 'function') {
+    //   Object.assign = function(target) {
+    //     'use strict';
+    //     if (target == null) {
+    //       throw new TypeError('Cannot convert undefined or null to object');
+    //     }
+
+    //     target = Object(target);
+    //     for (var index = 1; index < arguments.length; index++) {
+    //       var source = arguments[index];
+    //       if (source != null) {
+    //         for (var key in source) {
+    //           if (Object.prototype.hasOwnProperty.call(source, key)) {
+    //             target[key] = source[key];
+    //           }
+    //         }
+    //       }
+    //     }
+    //     return target;
+    //   };
+    // }
     _.extendOwn = _.assign = createAssigner(_.keys);
 
     // Returns the first key on an object that passes a predicate test.

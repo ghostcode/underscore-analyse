@@ -4,82 +4,83 @@
 	<title></title>
 	<script type="text/javascript" src="./src/underscore.js"></script>
 	<script type="text/javascript">
-	var property = function(key) {
-	    return function(obj) {
-	        return obj == null ? void 0 : obj[key];
-	    };
-	};
+	// var property = function(key) {
+	//     return function(obj) {
+	//         return obj == null ? void 0 : obj[key];
+	//     };
+	// };
 
-	// Helper for collection methods to determine whether a collection
-	// should be iterated as an array or as an object.
-	// Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
-	// Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
-	var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
-	var getLength = property('length');
-	// 判断是否为数组或者类数组（具有length属性且值为Number类型同时值大于等于0）
-	// [1,2] => true
-	// {name:'zhuxy',length:10} => true
+	// // Helper for collection methods to determine whether a collection
+	// // should be iterated as an array or as an object.
+	// // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
+	// // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
+	// var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+	// var getLength = property('length');
+	// // 判断是否为数组或者类数组（具有length属性且值为Number类型同时值大于等于0）
+	// // [1,2] => true
+	// // {name:'zhuxy',length:10} => true
 
-	// {name:'zhuxy'} => false
-	// {name:'zhuxy',length:'10'} => false
-	// {name:'zhuxy',length:-10} => false
-	var isArrayLike = function(collection) {
-	    // 类似 obj.length
-	    // 正常写法：
-	    // var length = collection == null ? void 0: collection.length;
-	    var length = getLength(collection);
-	    return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
-	};
+	// // {name:'zhuxy'} => false
+	// // {name:'zhuxy',length:'10'} => false
+	// // {name:'zhuxy',length:-10} => false
+	// var isArrayLike = function(collection) {
+	//     // 类似 obj.length
+	//     // 正常写法：
+	//     // var length = collection == null ? void 0: collection.length;
+	//     var length = getLength(collection);
+	//     return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
+	// };
 
-	console.log(isArrayLike([]))
-	console.log(_.last([1,2,3],2));
+	// // console.log(isArrayLike([]))
+	// // console.log(_.last([1,2,3],2));
 
-	var sum = _.reduce([3,10,39], function(memo, num){ return memo + num; });
-	// var even = _.find([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
-	// var even = _.find({age:'zhuxy',name:'weiqq'}, function(item){ return item == 'zhuxy'; });
-	var evens = _.filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
+	// var sum = _.reduce([3,10,39], function(memo, num){ return memo + num; });
+	// // var even = _.find([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
+	// // var even = _.find({age:'zhuxy',name:'weiqq'}, function(item){ return item == 'zhuxy'; });
+	// var evens = _.filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
 
-	var odds = _.reject([1,2,3,4,5,6],function(num){ return num % 2 == 0});
+	// var odds = _.reject([1,2,3,4,5,6],function(num){ return num % 2 == 0});
 
-	console.log(odds)
-
-
-	var createReduce = function(dir){
-
-		var reducer = function(obj,iteratee,memo,initial){
-			var keys = !isArrayLike(obj) && _.keys(obj);
-				length = (keys || obj).length,
-				index = dir > 0 ? 0 : length - 1;
-
-			if(!initial){
-				memo = obj[keys ? keys[index] : index];
-				index += dir;
-			}
-
-			for(; index >= 0 && index < length ; index += dir){
-				var currentKey = keys ? keys[index] : index;
-				memo = iteratee(memo,obj[currentKey],currentKey,obj);
-			}
-			return memo;
-		};
-
-		return function(obj,iteratee,memo,context){
-			var initial = arguments.length >= 3;
-			return reducer(obj,optimizeCb(iteratee,context,4),memo,initial);
-		};
-	}
-
-	_.has = function(obj,key){
-		return obj != null && hasOwnProperty.call(obj,key);
-	}
-	_.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
-	console.log(_.values({name:'zhuxy',age:20}))
+	// // console.log(odds)
 
 
-	var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
-	console.log(_.pluck(stooges, 'name'))
+	// var createReduce = function(dir){
+
+	// 	var reducer = function(obj,iteratee,memo,initial){
+	// 		var keys = !isArrayLike(obj) && _.keys(obj);
+	// 			length = (keys || obj).length,
+	// 			index = dir > 0 ? 0 : length - 1;
+
+	// 		if(!initial){
+	// 			memo = obj[keys ? keys[index] : index];
+	// 			index += dir;
+	// 		}
+
+	// 		for(; index >= 0 && index < length ; index += dir){
+	// 			var currentKey = keys ? keys[index] : index;
+	// 			memo = iteratee(memo,obj[currentKey],currentKey,obj);
+	// 		}
+	// 		return memo;
+	// 	};
+
+	// 	return function(obj,iteratee,memo,context){
+	// 		var initial = arguments.length >= 3;
+	// 		return reducer(obj,optimizeCb(iteratee,context,4),memo,initial);
+	// 	};
+	// }
+
+	// _.has = function(obj,key){
+	// 	return obj != null && hasOwnProperty.call(obj,key);
+	// }
+	// _.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
+	// console.log(_.values({name:'zhuxy',age:20}))
 
 
+	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+	// console.log(_.pluck(stooges, 'name'))
+	// console.log(_.where(stooges,{name:'moe'}))
+	var user = {name:'zhuxy',age:10};
+	_.defaults(null,{hobby:'basketball'})
 
 
 
