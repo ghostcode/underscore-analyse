@@ -4,6 +4,31 @@
 //     Underscore may be freely distributed under the MIT license.
 
 (function() {
+    // 两个重要概念：
+    // 偏函数应用(Partial Application）和函数柯里化(Currying)
+
+    // 偏函数应用指的是固化函数的一个或一些参数，从而产生一个新的函数
+    // Currying指的是将一个具有多个参数的函数，转换成能够通过一系列的函数链式调用，其中每一个函数都只有一个参数
+
+    // 区别：
+    // 偏函数后依然可以使用多参数，只要还有参数未固化；而Currying只能使用函数链
+    // Currying得到简化的函数方式更自然，而偏函数必须借用高阶函数或手动生成
+
+    // 偏函数和Currying有什么用？
+    // 主要就是从能一个通用函数得到更特定的函数
+
+    // 参考资料：
+
+    // http://www.cnblogs.com/cypine/p/3258552.html
+    // http://www.vaikan.com/currying-partial-application/
+    // http://benalman.com/news/2012/09/partial-application-in-javascript/
+    // http://www.jstips.co/zh_cn/curry-vs-partial-application/
+
+    // 函数编程的一些概念：
+
+    // http://hao.jser.com/archive/10619/
+
+    // 高等函数：一个接收某个函数作为参数的函数成为高等函数，该函数可以选择返回一个函数也可以返回其他类型
 
     // Baseline setup
     // --------------

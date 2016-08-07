@@ -107,13 +107,41 @@
 	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
 	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
 	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
-	var isMatch = _.isMatch(null,null);
-	console.log(isMatch)
+	function Person(name,age){
+		this.name = name;
+		this.age = age;
+	}
+	Person.prototype.show = function(){
+
+	}
+
+	var p1 = new Person('zhuxy',30);
+	// var isMatch = _.isMatch(null,p1);
+	console.log('for in:')
+	for(var i in p1){
+		console.log(i);
+	}
+	console.log('Object.keys:' + Object.keys(p1))
+
+	// console.log(isMatch)
 	// console.log(_.pluck(stooges, 'name'))
 	// console.log(_.where(stooges,{name:'moe'}))
 	// var user = {name:'zhuxy',age:10};
 	// var xx = _.defaults('',{hobby:'basketball'})
+	//
+	// function add(a,b) {
+	// 	return a + b;
+	// }
+	//
+	// function add2(b) {
+	// 	return add(2,b);
+	// }
+	//
+	// console.log(add2(10));
+	//
+	//
 
+	console.log(_.matcher({name:'zhuxy'})({name:'zhuxy'}))
 
 
 
