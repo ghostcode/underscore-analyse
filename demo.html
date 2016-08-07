@@ -75,12 +75,44 @@
 	// _.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
 	// console.log(_.values({name:'zhuxy',age:20}))
 
+	var createAssinger = function(keyFunc,defaults){
+		return function(obj){
+			var length = arguments.length;
+
+			if(defaults){
+				obj = Object(obj);
+			}
+
+			if(length < 2 || obj == null){
+				return obj;
+			}
+
+			for(var index = 1; index < length; index++){
+				var source = arguments[index],
+					keys = keyFunc(source);
+					l = keys.length;
+
+				for(var i = 0; i < l; i++){
+					var key = keys[i];
+					if(!defaults || obj[key] == void 0){
+						obj[key] = source[key];
+					}
+				}
+
+			}
+		}
+	}
+
 
 	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
+	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
+	var isMatch = _.isMatch(null,null);
+	console.log(isMatch)
 	// console.log(_.pluck(stooges, 'name'))
 	// console.log(_.where(stooges,{name:'moe'}))
-	var user = {name:'zhuxy',age:10};
-	_.defaults(null,{hobby:'basketball'})
+	// var user = {name:'zhuxy',age:10};
+	// var xx = _.defaults('',{hobby:'basketball'})
 
 
 

@@ -1211,8 +1211,9 @@
     };
 
     // An internal function for creating assigner functions.
-    // 创建一个指定的方法。
-    // 三个方法用到此内部方法
+    // 创建一个指定的方法
+
+    // 三个外部方法用到此内部方法
     // _.extend 自身属性和原型链属性都继承
     // _.extendOwn 自身属性继承
     // _.defaults 只覆盖原对象为undefined的属性
@@ -1220,10 +1221,9 @@
     // http://www.w3cfuns.com/notes/17398/ca4a6f6117fab81048c3bc873f4b3c36:storey-2.html
     // https://github.com/hanzichi/underscore-analysis/issues/4
     var createAssigner = function(keysFunc, defaults) {
-
         return function(obj) {
             var length = arguments.length;
-            // 对传入null／undefined的情况，将其转为 {}
+            // 在defaults为true的情况下，对obj为null／undefined的情况时，将obj转为 {}
             if (defaults){
                 obj = Object(obj);
             }
@@ -1362,15 +1362,25 @@
     };
 
     // Returns whether an object has a given set of `key:value` pairs.
+    // 返回对象中是否包含指定的键／值
     _.isMatch = function(object, attrs) {
         var keys = _.keys(attrs),
             length = keys.length;
-        if (object == null) return !length;
+
+        if (object == null){
+            return !length;
+        }
+
         var obj = Object(object);
+
         for (var i = 0; i < length; i++) {
             var key = keys[i];
-            if (attrs[key] !== obj[key] || !(key in obj)) return false;
+            // 值不等或键不在对象中
+            if (attrs[key] !== obj[key] || !(key in obj)){
+                return false;
+            }
         }
+
         return true;
     };
 
@@ -1603,6 +1613,7 @@
 
     // Returns a predicate for checking whether an object has a given set of
     // `key:value` pairs.
+    // 返回一个判断给定对象是否包含指定键值对的断言方法
     _.matcher = _.matches = function(attrs) {
         attrs = _.extendOwn({}, attrs);
         return function(obj) {
