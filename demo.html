@@ -107,21 +107,21 @@
 	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
 	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
 	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
-	function Person(name,age){
-		this.name = name;
-		this.age = age;
-	}
-	Person.prototype.show = function(){
+	// function Person(name,age){
+	// 	this.name = name;
+	// 	this.age = age;
+	// }
+	// Person.prototype.show = function(){
 
-	}
+	// }
 
-	var p1 = new Person('zhuxy',30);
-	// var isMatch = _.isMatch(null,p1);
-	console.log('for in:')
-	for(var i in p1){
-		console.log(i);
-	}
-	console.log('Object.keys:' + Object.keys(p1))
+	// var p1 = new Person('zhuxy',30);
+	// // var isMatch = _.isMatch(null,p1);
+	// console.log('for in:')
+	// for(var i in p1){
+	// 	console.log(i);
+	// }
+	// console.log('Object.keys:' + Object.keys(p1))
 
 	// console.log(isMatch)
 	// console.log(_.pluck(stooges, 'name'))
@@ -141,7 +141,9 @@
 	//
 	//
 
-	console.log(_.matcher({name:'zhuxy'})({name:'zhuxy'}))
+	// console.log(_.matcher({name:'zhuxy'})({name:'zhuxy'}))
+
+	console.log(_.extend({name:{user:'zhuxy',hobby:'bs'},age:20},{name:{user:'weiqq'},age:40}))
 
 
 

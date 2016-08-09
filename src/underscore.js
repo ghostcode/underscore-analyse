@@ -167,6 +167,7 @@
     };
 
     // An external wrapper for the internal callback generator.
+    // 偏函数
     _.iteratee = function(value, context) {
         return cb(value, context, Infinity);
     };
@@ -1267,6 +1268,8 @@
                     var key = keys[i];
                     // _.extend/_.extendOwn的defaults参数都为undefined，所以此判断始终通过
                     // _.defaults 参数为true，所以只能obj[key]的值为undefined时，才通过
+
+                    // 这里没有判断obj[key]是否为对象或者数组，所以不支持递归合并
                     if (!defaults || obj[key] === void 0){
                         obj[key] = source[key];
                     }
@@ -1277,6 +1280,14 @@
     };
 
     // Extend a given object with all the properties in passed-in object(s).
+    // 此方法不支持递归合并
+
+    // _.extend({user:{name:'zhuxy',age:'20'}},{user:{name:'weiqq'}});  =====> {user:{name:'weiqq'}};
+
+    // jQuery的支持
+
+    // jQuery.extend(true,{user:{name:'zhuxy',age:'20'}},{user:{name:'weiqq'}}); ===> {user:{name:'weiqq',age:20}}
+
     _.extend = createAssigner(_.allKeys);
 
     // Assigns a given object with all the own properties in the passed-in object(s).
