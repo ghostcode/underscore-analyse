@@ -440,6 +440,9 @@
 
     // Convenience version of a common use case of `map`: fetching a property.
     // _.map的便利方法，只取出特定key的值。
+    // var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+    // _.pluck(stooges, 'name');
+    // => ["moe", "larry", "curly"]
     // pluck:拉／拽／扯
     _.pluck = function(obj, key) {
         return _.map(obj, _.property(key));
@@ -1325,7 +1328,9 @@
             key;
         for (var i = 0, length = keys.length; i < length; i++) {
             key = keys[i];
-            if (predicate(obj[key], key, obj)) return key;
+            if (predicate(obj[key], key, obj)){
+                return key;
+            }
         }
     };
 
@@ -1338,7 +1343,11 @@
     _.pick = restArgs(function(obj, keys) {
         var result = {},
             iteratee = keys[0];
-        if (obj == null) return result;
+
+        if (obj == null){
+            return result;
+        }
+
         if (_.isFunction(iteratee)) {
             if (keys.length > 1) iteratee = optimizeCb(iteratee, keys[1]);
             keys = _.allKeys(obj);
@@ -1347,11 +1356,13 @@
             keys = flatten(keys, false, false);
             obj = Object(obj);
         }
+
         for (var i = 0, length = keys.length; i < length; i++) {
             var key = keys[i];
             var value = obj[key];
             if (iteratee(value, key, obj)) result[key] = value;
         }
+
         return result;
     });
 
@@ -1403,6 +1414,7 @@
         var keys = _.keys(attrs),
             length = keys.length;
 
+        // 当object为null时，根据attrs的key多少来判读是否包含
         if (object == null){
             return !length;
         }

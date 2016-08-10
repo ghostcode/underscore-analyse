@@ -106,6 +106,7 @@
 
 	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
 	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
+	var isMatch = _.isMatch(null,0);
 	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
 	// function Person(name,age){
 	// 	this.name = name;
@@ -143,7 +144,15 @@
 
 	// console.log(_.matcher({name:'zhuxy'})({name:'zhuxy'}))
 
-	console.log(_.extend({name:{user:'zhuxy',hobby:'bs'},age:20},{name:{user:'weiqq'},age:40}))
+	// console.log(_.extend({name:{user:'zhuxy',hobby:'bs'},age:20},{name:{user:'weiqq'},age:40}))
+
+	// var key = _.findKey({user:'zhuxy',age:20,name:'zhuxy'},function(value,key,obj){
+	// 	return value == 'zhuxy';
+	// });
+
+	// console.log(key);
+
+
 
 
 
