@@ -228,7 +228,7 @@
     // 判断是否为数组或者类数组（具有length属性且值为Number类型同时值大于等于0）
     // [1,2] => true
     // {name:'zhuxy',length:10} => true
-    
+
     // {name:'zhuxy'} => false
     // {name:'zhuxy',length:'10'} => false
     // {name:'zhuxy',length:-10} => false
@@ -662,7 +662,7 @@
     };
 
     // Trim out all falsy values from an array.
-    // 过滤掉所有可以转换为 false 的值，[0,null,false,'',undefined,NaN,11] => [11] 
+    // 过滤掉所有可以转换为 false 的值，[0,null,false,'',undefined,NaN,11] => [11]
     _.compact = function(array) {
         return _.filter(array, _.identity);
     };
@@ -1113,12 +1113,12 @@
     // ----------------
 
     // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
-    var hasEnumBug = !{
-        toString: null
-    }.propertyIsEnumerable('toString');
-    var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString',
-        'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'
-    ];
+    // https://segmentfault.com/a/1190000005177883
+    // for in 出问题有两个条件：1. IE<9, 2.被枚举的对象某些键被重写，比如 toString。
+    // propertyIsEnumerable returns a Boolean indicating whether the specified property is enumerable
+    var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
+    // 出问题的键
+    var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString' ];
 
     var collectNonEnumProps = function(obj, keys) {
         var nonEnumIdx = nonEnumerableProps.length;
@@ -1139,6 +1139,7 @@
 
     // Retrieve the names of an object's own properties.
     // Delegates to **ECMAScript 5**'s native `Object.keys`.
+    // 获取对象的可枚举自有属性，不包括原型链上的，ES5则使用Object.keys。
     _.keys = function(obj) {
         // 不是对象返回空数组
         if (!_.isObject(obj)){
@@ -1146,8 +1147,8 @@
         }
         // 检测是否有本地Object.keys
         if (nativeKeys){
-            return nativeKeys(obj);  
-        } 
+            return nativeKeys(obj);
+        }
         // 无本地方法，则for...in循环，同时排出继承的属性
         var keys = [];
         for (var key in obj){
@@ -1163,6 +1164,7 @@
     };
 
     // Retrieve all the property names of an object.
+    // 获取对象的所有属性，包括继承的
     _.allKeys = function(obj){
 
         if (!_.isObject(obj)){
@@ -1170,7 +1172,6 @@
         }
 
         var keys = [];
-
         for (var key in obj){
             keys.push(key);
         }
@@ -1258,7 +1259,7 @@
             }
             // 如果只传入一个参数或第一个参数为null／''/undefined，则直接返回
             if (length < 2 || obj == null){
-                return obj;   
+                return obj;
             }
             // 从第二个参数开始枚举
             for (var index = 1; index < length; index++) {
@@ -1409,7 +1410,7 @@
     };
 
     // Returns whether an object has a given set of `key:value` pairs.
-    // 返回对象中是否包含指定的键／值
+    // attrs中的键和值是否包含在对象中
     _.isMatch = function(object, attrs) {
         var keys = _.keys(attrs),
             length = keys.length;
