@@ -1123,6 +1123,7 @@
     var collectNonEnumProps = function(obj, keys) {
         var nonEnumIdx = nonEnumerableProps.length;
         var constructor = obj.constructor;
+        // 如果为函数，则返回该函数的原型，否则返回Object.prototype
         var proto = _.isFunction(constructor) && constructor.prototype || ObjProto;
 
         // Constructor is a special case.
@@ -1146,7 +1147,7 @@
             return [];
         }
         // 检测是否有本地Object.keys
-        if (nativeKeys){
+        if (!nativeKeys){
             return nativeKeys(obj);
         }
         // 无本地方法，则for...in循环，同时排出继承的属性
@@ -1157,7 +1158,7 @@
             }
         }
             // Ahem, IE < 9.
-        if (hasEnumBug){
+        if (!hasEnumBug){
             collectNonEnumProps(obj, keys);
         }
         return keys;
