@@ -174,6 +174,8 @@
 
     // Similar to ES6's rest param (http://ariya.ofilabs.com/2013/03/es6-and-rest-parameter.html)
     // This accumulates the arguments passed into an array, after a given index.
+    // 生成一个能接受不定参数的函数，并将不定参数转换成一个数组。
+    // https://yoyoyohamapi.gitbooks.io/undersercore-analysis/content/base/rest%E5%8F%82%E6%95%B0.html
     var restArgs = function(func, startIndex) {
         startIndex = startIndex == null ? func.length - 1 : +startIndex;
         return function() {
@@ -430,13 +432,15 @@
     };
 
     // Invoke a method (with arguments) on every item in a collection.
-    _.invoke = restArgs(function(obj, method, args) {
-        var isFunc = _.isFunction(method);
-        return _.map(obj, function(value) {
-            var func = isFunc ? method : value[method];
-            return func == null ? func : func.apply(value , args);
-        });
-    });
+    _.invoke = restArgs(
+        function(obj, method, args) {
+            var isFunc = _.isFunction(method);
+            return _.map(obj, function(value) {
+                var func = isFunc ? method : value[method];
+                return func == null ? func : func.apply(value , args);
+            });
+        }
+    );
 
     // Convenience version of a common use case of `map`: fetching a property.
     // _.map的便利方法，只取出特定key的值。
