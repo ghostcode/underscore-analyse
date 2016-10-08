@@ -107,9 +107,9 @@
 	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
 	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
 	// var isMatch = _.isMatch(null,0);
-	var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
+	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
 
-	_.keys({name:'zhuxy'});
+	// _.keys({name:'zhuxy'});
 	// function Person(name,age){
 	// 	this.name = name;
 	// 	this.age = age;
@@ -154,7 +154,74 @@
 
 	// console.log(key);
 
-	_.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
+//	_.values({one: 1, two: 2, three: 3});
+//
+//	_.mapObject({start: 5, end: 12}, function(val, key) {
+//	  return val + 5;
+//	});
+//
+//    function xxx() {
+//
+//    }
+//    console.log(_.isObject(xxx));
+//
+
+//    var prevUnderscore = window._;
+//
+//        _.noConflict = function () {
+//            window._ = prevUnderscore;
+//            return this;
+//        }
+//    console.log(_.constant(10)());
+//
+//    let arr = [1,2,3,5];
+//
+//    let getLen = _.property('length');
+//
+//        console.log(getLen(arr));
+//    var a = [null, null, [1,2,3], null, [10, 12], null,undefined,false,'',' '];
+
+//    console.log(a.filter(_.identity));
+//
+//    console.log(_.filter(a,_.identity));
+//
+//        console.log(a.filter(function (val) {
+//            return val;
+//        }))
+//    let arr = [1,2,false,'',undefined,null,0];
+//    console.log(_.compact(arr))
+
+//    let arr = [1,2,false,'',undefined,null,0];
+//
+//    arrfilter = arr.filter(function(value){
+//        return value;
+//    });
+//        console.log(arrfilter)
+//
+//
+
+    let obj = {name:'zhuxy',age:25};
+    let obj1 = {name:'zhuxy',age:26};
+    let obj2 = {name:'zhuxy',age:27};
+    let obj3
+
+    let getName = _.property('name');
+//    console.log(getName(obj3));
+//        console.log(obj3['name']);
+
+
+
+//console.log(_.propertyOf(null)('name'))
+
+//        console.dir(_.times(-1,function (i) {
+//            return i*2
+//        }))
+
+    // console.dir(_(2).times(function (i) {
+    //     return i;
+    // }));
+
+	console.log(_.random(10,15));
 
 
 
@@ -169,24 +236,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	</script>
+    </script>
 </head>
 <body>
-<iframe src="http://m.iwjw.com/"></iframe>
 </body>
 </html>

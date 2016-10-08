@@ -34,11 +34,14 @@
     // --------------
 
     // Establish the root object, `window` (`self`) in the browser, `global`
-    // on the server, or `this` in some virtual machines. We use `self`
-    // instead of `window` for `WebWorker` support.
-    var root = typeof self == 'object' && self.self === self && self ||
-        typeof global == 'object' && global.global === global && global ||
-        this;
+    // on the server, or `this` in some virtual machines.
+    // We use `self` instead of `window` for `WebWorker` support.
+    //WebWorker中没有window对象，所以使用browser和WebWorker共有的self对象
+    var root = typeof self == 'object' && self.self === self && self
+                ||
+                typeof global == 'object' && global.global === global && global
+                ||
+                this;
 
     // Save the previous value of the `_` variable.
     var previousUnderscore = root._;
@@ -685,7 +688,11 @@
                     while (j < len) output[idx++] = value[j++];
                 } else {
                     flatten(value, shallow, strict, output);
-                    idx = output.length;
+                    idx = output.lengt
+
+
+
+                    h;
                 }
             } else if (!strict) {
                 output[idx++] = value;
@@ -1619,6 +1626,9 @@
     };
 
     // Is a given variable undefined?
+    //undefined vs void 0
+    //undefined在某些浏览器下面可以被重写
+    //
     _.isUndefined = function(obj) {
         return obj === void 0;
     };
@@ -1689,7 +1699,8 @@
             max = min;
             min = 0;
         }
-        return min + Math.floor(Math.random() * (max - min + 1));
+        return min + Math.ceil(Math.random() * (max - min));
+        // return min + Math.floor(Math.random() * (max - min + 1));
     };
 
     // A (possibly faster) way to get the current timestamp as an integer.
