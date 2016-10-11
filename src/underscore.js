@@ -1233,6 +1233,7 @@
     };
 
     // Invert the keys and values of an object. The values must be serializable.
+    // 翻转键值对{x:y} => {y:x}
     _.invert = function(obj) {
         var result = {};
         var keys = _.keys(obj);
@@ -1694,13 +1695,16 @@
     };
 
     // Return a random integer between min and max (inclusive).
+    // integer {-1，0，1} 负整数 、 0 、正整数
+    // https://zh.wikipedia.org/wiki/%E6%95%B4%E6%95%B0
+    // [x,y]包括y,注意与Math.random的区别
     _.random = function(min, max) {
         if (max == null) {
             max = min;
             min = 0;
         }
-        return min + Math.ceil(Math.random() * (max - min));
-        // return min + Math.floor(Math.random() * (max - min + 1));
+        // return min + Math.ceil(Math.random() * (max - min));
+        return min + Math.floor(Math.random() * (max - min + 1));
     };
 
     // A (possibly faster) way to get the current timestamp as an integer.
