@@ -1729,12 +1729,24 @@
             return map[match];
         };
         // Regexes for identifying a key that needs to be escaped.
+        // 正则用来识别需要被转义的key
+        // (?:&|<|>|"|'|`)
+        // (?:&amp;|&lt;|&gt;|&quot;|&#x27;|&#x60;)
+        // (?:x) 匹配 x 不会捕获匹配项。这被称为非捕获括号（non-capturing parentheses）。
+        // 匹配项不能够从结果数组的元素 [1], ..., [n] 或已被定义的 RegExp 对象的属性 $1, ..., $9 再次访问到。
         var source = '(?:' + _.keys(map).join('|') + ')';
         var testRegexp = RegExp(source);
         var replaceRegexp = RegExp(source, 'g');
         return function(string) {
             string = string == null ? '' : '' + string;
-            return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+            // return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+            return testRegexp.test(string) ?
+
+                   string.replace(replaceRegexp,function (match) {
+                       return map[match]
+                   }):
+
+                   string;
         };
     };
     _.escape = createEscaper(escapeMap);

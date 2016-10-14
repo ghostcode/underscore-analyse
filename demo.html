@@ -75,36 +75,36 @@
 	// _.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
 	// console.log(_.values({name:'zhuxy',age:20}))
 
-	var createAssinger = function(keyFunc,defaults){
-		return function(obj){
-			var length = arguments.length;
+	// var createAssinger = function(keyFunc,defaults){
+	// 	return function(obj){
+	// 		var length = arguments.length;
 
-			if(defaults){
-				obj = Object(obj);
-			}
+	// 		if(defaults){
+	// 			obj = Object(obj);
+	// 		}
 
-			if(length < 2 || obj == null){
-				return obj;
-			}
+	// 		if(length < 2 || obj == null){
+	// 			return obj;
+	// 		}
 
-			for(var index = 1; index < length; index++){
-				var source = arguments[index],
-					keys = keyFunc(source);
-					l = keys.length;
+	// 		for(var index = 1; index < length; index++){
+	// 			var source = arguments[index],
+	// 				keys = keyFunc(source);
+	// 				l = keys.length;
 
-				for(var i = 0; i < l; i++){
-					var key = keys[i];
-					if(!defaults || obj[key] == void 0){
-						obj[key] = source[key];
-					}
-				}
+	// 			for(var i = 0; i < l; i++){
+	// 				var key = keys[i];
+	// 				if(!defaults || obj[key] == void 0){
+	// 					obj[key] = source[key];
+	// 				}
+	// 			}
 
-			}
-		}
-	}
+	// 		}
+	// 	}
+	// }
 
 
-	var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
+	// var stooges = [{name: 'moe', age: 40},{name: 'moe', age: 49}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
 	// var isMatcher = _.matcher({name:'moe'})({name:'moe'});
 	// var isMatch = _.isMatch(null,0);
 	// var isMatch = _.isMatch({name:'moe',age:40},{name:'moe',age:30});
@@ -221,27 +221,44 @@
     //     return i;
     // }));
 
-	    console.log(_.random(-10));
-        console.log(_.escape('<div>html</div>'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	    // // console.log(_.random(-10));
+        // console.log(_.escape('<div>html</div>'));
+		//
+		// var createEscaper = function(map) {
+	    //     var escaper = function(match) {
+	    //         return map[match];
+	    //     };
+	    //     // Regexes for identifying a key that needs to be escaped.
+	    //     // 正则用来识别需要被转义的key
+	    //     // (?:&|<|>|"|'|`)
+	    //     // (?:&amp;|&lt;|&gt;|&quot;|&#x27;|&#x60;)
+	    //     // (?:x) 匹配 x 不会捕获匹配项。这被称为非捕获括号（non-capturing parentheses）。
+	    //     // 匹配项不能够从结果数组的元素 [1], ..., [n] 或已被定义的 RegExp 对象的属性 $1, ..., $9 再次访问到。
+	    //     var source = '(?:' + _.keys(map).join('|') + ')';
+	    //     var testRegexp = RegExp(source);
+	    //     var replaceRegexp = RegExp(source, 'g');
+	    //     return function(string) {
+	    //         string = string == null ? '' : '' + string;
+	    //         return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+	    //     };
+	    // };
+		//
+		// var numMap = {
+		// 	1:'I',
+		// 	2:'love',
+		// 	3:'you'
+		// }
+		//
+		// var reg = new RegExp(Object.keys(numMap).join('|'),'g');
+		// var str = '123';
+		//
+		// var newStr = str.replace(reg,function(match){
+		// 	return numMap[match];
+		// });
+		//
+		// console.log(newStr);
+		var object = {cheese: 'crumpets', stuff: function(){ return 'nonsense'; }};
+		_.result(object, 'cheese');
 
 
     </script>
