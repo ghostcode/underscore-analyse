@@ -1759,16 +1759,40 @@
         if (value === void 0) {
             value = fallback;
         }
-        return _.isFunction(value) ? value.call(object) : value;
+        return _.isFunction(value) ?
+
+                value.call(object):
+
+                value;
     };
 
     // Generate a unique integer id (unique within the entire client session).
     // Useful for temporary DOM ids.
+    // 生成唯一带前缀（可选）的ID。
     var idCounter = 0;
     _.uniqueId = function(prefix) {
+        // 先++，保证从1开始，然后变为字符串
         var id = ++idCounter + '';
+        // 判断是否有前缀
         return prefix ? prefix + id : id;
     };
+    // 另一种闭包实现：
+
+    // function uniqueId(prefix) {
+    //     var id = 0,
+    //         prefix = prefix ? prefix + '' : '';
+    //
+    //     return function () {
+    //         return prefix + ++id;
+    //     }
+    // }
+
+    // 调用：
+    //
+    // var u = uniqueId('iwjw');
+    //
+    // u();
+    // u();
 
     // By default, Underscore uses ERB-style template delimiters, change the
     // following template settings to use alternative delimiters.

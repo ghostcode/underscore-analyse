@@ -257,8 +257,21 @@
 		// });
 		//
 		// console.log(newStr);
-		var object = {cheese: 'crumpets', stuff: function(){ return 'nonsense'; }};
-		_.result(object, 'cheese');
+		var object = {cheese: 'crumpets', stuff: function(){ return this.cheese; }};
+		var	cheese = 'global cheese';
+		var xx = object.stuff;
+
+//		console.log(xx());
+//		console.log(_.result(object, 'xx'));
+
+		function uniqueId(prefix) {
+			var id = 0,
+				prefix = prefix ? prefix + '' : '';
+
+			return function () {
+				return prefix + ++id;
+			}
+		}
 
 
     </script>
