@@ -214,7 +214,7 @@
         return result;
     };
 
-    //获得指定对象的属性（key）
+    //获得对象的指定属性（key）
     // var getName = property('name');
     // var name = getName({name:'zhuxy'});
 
@@ -1886,6 +1886,7 @@
     };
 
     // Add a "chain" function. Start chaining a wrapped Underscore object.
+    // 增加链式调用方法,调用此方法后得通过 .value()获得真实的值。
     _.chain = function(obj) {
         var instance = _(obj);
         instance._chain = true;

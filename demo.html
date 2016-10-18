@@ -257,22 +257,38 @@
 		// });
 		//
 		// console.log(newStr);
-		var object = {cheese: 'crumpets', stuff: function(){ return this.cheese; }};
-		var	cheese = 'global cheese';
-		var xx = object.stuff;
+//		var object = {cheese: 'crumpets', stuff: function(){ return this.cheese; }};
+//		var	cheese = 'global cheese';
+//		var xx = object.stuff;
 
 //		console.log(xx());
 //		console.log(_.result(object, 'xx'));
 
-		function uniqueId(prefix) {
-			var id = 0,
-				prefix = prefix ? prefix + '' : '';
+//		function uniqueId(prefix) {
+//			var id = 0,
+//				prefix = prefix ? prefix + '' : '';
+//			return function () {
+//				return prefix + ++id;
+//			}
+//		}
 
-			return function () {
-				return prefix + ++id;
-			}
-		}
+		var stooges = [{name: 'curly', age: 25}, {name: 'moe', age: 21}, {name: 'larry', age: 23}];
 
+		var users = {
+			name:'zhuxy',
+			hobby:'basketball'
+		};
+
+//		var youngest = _(stooges)
+//				.sortBy(function(stooge){ return stooge.age; })
+//				.map(function(stooge){ return stooge.name + ' is ' + stooge.age; })
+//				.first()
+//				.value();
+
+//		console.log(youngest);
+
+		var newM = _.chain([1, 2, 3]).map(function(n){ return n * 2; }).value();
+		console.log(newM);
 
     </script>
 </head>
