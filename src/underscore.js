@@ -1126,7 +1126,18 @@
     // Keys in IE < 9 that won't be iterated by `for key in ...` and thus missed.
     // https://segmentfault.com/a/1190000005177883
     // for in 出问题有两个条件：1. IE<9, 2.被枚举的对象某些键被重写，比如 toString。
+
+    // var obj = {toString: 'hanzichi',name:'iwjw'};
+    //
+    // for (var k in obj) {
+    //     alert(k);
+    // }
+    // 在 chrome 中我们 alert 出了预期的 "toString"和"iwjw"，而在 IE 8 中只弹出"iwjw"。
+
     // propertyIsEnumerable returns a Boolean indicating whether the specified property is enumerable
+    // propertyIsEnumerable 返回一个Boolean值以此来表示指定属性是否可以枚举。
+    // 为何加 ! ?
+    // 其实
     var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
     // 出问题的键
     var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString' ];
@@ -1925,9 +1936,11 @@
     // Add all mutator Array functions to the wrapper.
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype
     // JS Array的
-    // mutator functions:
+
+    // mutator functions:会改变自身的方法
     // copyWidth/fill/pop/push/reverse/shift/sort/splice/unshift
-    // accessor functions:
+
+    // accessor functions:不会改变自身的方法
     // concat/includes/join/slice/toSource/toString/toLocalString/indexOf/lastIndexOf
     // 给包装后的对象增加改变原数组的方法
     _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
@@ -1955,10 +1968,10 @@
     });
 
     // Extracts the result from a wrapped and chained object.
-    // 从一个包装和链式对象上获取值
+    // 从一个包装、链式对象上获取值
     // 为何要放原型上呢？
     // _() 和 _.chain() 调用之后，其实就是类似jQuery的无new操作返回了一个 _ 的实例，实例只能调用原型上方法，
-    // 经过上面两个方法包装之后，真正的值是挂在 .wrapped 上面的。
+    // 经过上面两个方法包装之后，真正的值是挂在 _wrapped 上面的。
     _.prototype.value = function() {
         return this._wrapped;
     };
