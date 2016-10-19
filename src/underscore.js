@@ -1905,6 +1905,8 @@
     };
 
     // Add your own custom functions to the Underscore object.
+    // 为underscore对象添加自定义方法
+    // 类似jQuery的extend
     _.mixin = function(obj) {
         _.each(_.functions(obj), function(name) {
             var func = _[name] = obj[name];
@@ -1917,15 +1919,29 @@
     };
 
     // Add all of the Underscore functions to the wrapper object.
+    // 为包装对象添加underscore方法
     _.mixin(_);
 
     // Add all mutator Array functions to the wrapper.
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype
+    // JS Array的
+    // mutator functions:
+    // copyWidth/fill/pop/push/reverse/shift/sort/splice/unshift
+    // accessor functions:
+    // concat/includes/join/slice/toSource/toString/toLocalString/indexOf/lastIndexOf
+    // 给包装后的对象增加改变原数组的方法
     _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
         var method = ArrayProto[name];
+
         _.prototype[name] = function() {
             var obj = this._wrapped;
+
             method.apply(obj, arguments);
-            if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
+
+            if ((name === 'shift' || name === 'splice') && obj.length === 0){
+                delete obj[0];
+            }
+
             return chainResult(this, obj);
         };
     });
@@ -1939,6 +1955,10 @@
     });
 
     // Extracts the result from a wrapped and chained object.
+    // 从一个包装和链式对象上获取值
+    // 为何要放原型上呢？
+    // _() 和 _.chain() 调用之后，其实就是类似jQuery的无new操作返回了一个 _ 的实例，实例只能调用原型上方法，
+    // 经过上面两个方法包装之后，真正的值是挂在 .wrapped 上面的。
     _.prototype.value = function() {
         return this._wrapped;
     };
