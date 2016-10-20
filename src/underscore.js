@@ -1134,10 +1134,13 @@
     // }
     // 在 chrome 中我们 alert 出了预期的 "toString"和"iwjw"，而在 IE 8 中只弹出"iwjw"。
 
+    // hasOwnProperty 和 propertyIsEnumerable 的区别？
+    // https://www.zhihu.com/question/21907133
+
     // propertyIsEnumerable returns a Boolean indicating whether the specified property is enumerable
     // propertyIsEnumerable 返回一个Boolean值以此来表示指定属性是否可以枚举。
     // 为何加 ! ?
-    // 其实
+    //
     var hasEnumBug = !{ toString: null }.propertyIsEnumerable('toString');
     // 出问题的键
     var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString' ];
@@ -1150,10 +1153,14 @@
 
         // Constructor is a special case.
         var prop = 'constructor';
-        if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+        // 若对象自身有'constructor'属性，但又没有在keys中，则加入数组。
+        if ( _.has(obj, prop) && !_.contains(keys, prop) ) {
+            keys.push(prop);
+        }
 
         while (nonEnumIdx--) {
             prop = nonEnumerableProps[nonEnumIdx];
+            // 
             if (prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
                 keys.push(prop);
             }
@@ -1179,7 +1186,7 @@
                 keys.push(key);
             }
         }
-            // Ahem, IE < 9.
+            // Ahem(嗯哼), IE < 9.
         if (!hasEnumBug){
             collectNonEnumProps(obj, keys);
         }
