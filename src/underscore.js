@@ -1213,11 +1213,18 @@
     };
 
     // Retrieve the values of an object's properties.
+    // 获取对象的属性值，组成一个数组返回。
+    // _.values({one: 1, two: 2, three: 3});
+    // => [1, 2, 3]
+
     _.values = function(obj) {
         var keys = _.keys(obj);
         var length = keys.length;
         // var values = [];
         // ??? 为何要声明一个定长度的数组？
+        // http://javascript.ruanyifeng.com/stdlib/array.html
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+        // Array(x[,x])，传入的参数不同行为不同
         var values = Array(length);
         for (var i = 0; i < length; i++) {
             values[i] = obj[keys[i]];
@@ -1227,6 +1234,8 @@
 
     // Returns the results of applying the iteratee to each element of the object.
     // In contrast to _.map it returns an object.
+    // 返回值是，为对象上的每个元素应用回调之后的值，与_.map对比其返回的是个对象
+
     _.mapObject = function(obj, iteratee, context) {
         iteratee = cb(iteratee, context);
         var keys = _.keys(obj),
