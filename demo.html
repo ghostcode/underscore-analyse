@@ -316,13 +316,14 @@
 //		}
 //
 //		_.functions(obj);
-
-		var key = _.findKey({name:'zhuxy',age:10},function (value, key, obj) {
-			console.log(value,key,obj);
-			return value == 10;
-		})
-
-		console.log(key)
+//
+//		var key = _.findKey({name:'zhuxy',age:10},function (value, key, obj) {
+//			console.log(value,key,obj);
+//			return value == 10;
+//		})
+//
+//		console.log(key)
+		_.pick({name: 'moe', age: 50, userid: 'moe1'}, 'name', 'age');
     </script>
 </head>
 <body>
