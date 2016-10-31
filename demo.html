@@ -324,9 +324,14 @@
 //
 //		console.log(key)
 //		_.pick({name: 'moe', age: 50, userid: 'moe1'}, 'name', 'age');
-		console.log(_.extend(null))
+//		console.log(_.extend(null))
+//
+//      console.log(_.extend({name:'zhuxy'},{name:'weiqq'}));
+		var obj = {name:'zhuxy',age:'25',hobby:[1,2,3]}
 
-        console.log(_.extend({name:'zhuxy'},{name:'weiqq'}));
+		var obj2 = _.clone(obj);
+
+		console.log(obj2);
     </script>
 </head>
 <body>
