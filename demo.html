@@ -347,7 +347,17 @@
 
 //        console.log(_.matcher({name:'zhuxy'})({name:'zhuxy',age:10}))
 
-        console.log(_.isMatch(null,''))
+        // console.log(_.isMatch(null,''))
+
+        // _.matcher = function(attr){
+        // 	return function(obj){
+        // 		return _.isMatch(obj,attr);
+        // 	}
+        // }
+
+    var func = function(greeting){ return greeting + ': ' + this.name };
+    func = _.bind(func, {name: 'moe'}, 'hi');
+    func();
 
     </script>
 </head>
