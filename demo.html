@@ -355,12 +355,23 @@
         // 	}
         // }
 
-    var func = function(greeting){ return greeting + ': ' + this.name };
-    func = _.bind(func, {name: 'moe'}, 'hi');
-    func();
-
+//    var func = function(greeting){ return greeting + ': ' + this.name };
+//    func = _.bind(func, {name: 'moe'}, 'hi');
+//    func();
+//
+//        var subtract = function(a,b){return b - a;};
+//
+//        sub5 = _.partial(subtract,5);
+//
+//        console.log(sub5(20));
+        var throttled = _.throttle(updatePosition, 1000,{leading:false});
+        window.onscroll = throttled;
+        function updatePosition() {
+            console.log(1)
+        }
     </script>
 </head>
 <body>
+    <div style="height:2000px;background-color: grey"></div>
 </body>
 </html>
