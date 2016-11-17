@@ -364,9 +364,14 @@
 //        sub5 = _.partial(subtract,5);
 //
 //        console.log(sub5(20));
-        var throttled = _.throttle(updatePosition, 1000,{leading:false});
-        window.onscroll = throttled;
-        function updatePosition() {
+//        var throttled = _.throttle(updatePosition, 1000,{leading:false});
+//        window.onscroll = throttled;
+//        function updatePosition() {
+//            console.log(1)
+//        }
+        var debounced = _.debounce(updatePosition2,1000);
+        window.onscroll = debounced;
+        function updatePosition2() {
             console.log(1)
         }
     </script>
