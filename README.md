@@ -1,5 +1,7 @@
 # Underscore-1.8.3.js 源码注解
 
+[![codecov](https://codecov.io/gh/ghostcode/underscore-analyse/branch/master/graph/badge.svg)](https://codecov.io/gh/ghostcode/underscore-analyse)
+
 ##背景
 
 1. 尝试源码阅读
