@@ -364,30 +364,32 @@
 //        sub5 = _.partial(subtract,5);
 //
 //        console.log(sub5(20));
-        var throttled = _.throttle(updatePosition, 1000);
-        window.onscroll = throttled;
-        function updatePosition() {
-            console.log(1)
-        }
-//        var debounced = _.debounce(updatePosition2,1000);
-//        window.onscroll = debounced;
-//        function updatePosition2() {
+//        var throttled = _.throttle(updatePosition, 1000);
+//        window.onscroll = throttled;
+//        function updatePosition() {
 //            console.log(1)
 //        }
-
-        function handleVisibilityChange() {
-            if (document.hidden) {
-                document.title = 'hidden'
-                console.log('hidden')
-            } else  {
-                document.title = 'show'
-                console.log('in')
-            }
-        }
-
-        document.addEventListener("visibilitychange", handleVisibilityChange, false);
-
-        var r = _.chunk([1,2,3,4,5],2);
+////        var debounced = _.debounce(updatePosition2,1000);
+////        window.onscroll = debounced;
+////        function updatePosition2() {
+////            console.log(1)
+////        }
+//
+//        function handleVisibilityChange() {
+//            if (document.hidden) {
+//                document.title = 'hidden'
+//                console.log('hidden')
+//            } else  {
+//                document.title = 'show'
+//                console.log('in')
+//            }
+//        }
+//
+//        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+//
+//        var r = _.chunk([1,2,3,4,5],2);
+        var isFalsy = _.negate(Boolean);
+        _.find([-2, -1, 0, 1, 2], isFalsy);
     </script>
 </head>
 <body>
