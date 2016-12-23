@@ -388,8 +388,29 @@
 //        document.addEventListener("visibilitychange", handleVisibilityChange, false);
 //
 //        var r = _.chunk([1,2,3,4,5],2);
-        var isFalsy = _.negate(Boolean);
-        _.find([-2, -1, 0, 1, 2], isFalsy);
+        // var isFalsy = _.negate(Boolean);
+        // _.find([-2, -1, 0, 1, 2], isFalsy);
+        _.templateSettings = {
+        }
+        let compiled = _.template("hello: <%= name %>zhuxy");
+        let str = compiled({name: 'moe'});
+
+        console.log(str)
+
+        // var __t,
+        // 	__p='',
+        // 	__j=Array.prototype.join,
+        // 	print = function(){
+        // 		__p += __j.call(arguments,'');
+        // 	};
+
+        // with(obj||{}){
+        // 	__p += 'hello: ' + (( __t=( name ) ) == null ? '' : __t ) + '';
+        // }
+
+        // return __p;
+        
+
     </script>
 </head>
 <body>
